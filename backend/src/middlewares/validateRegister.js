@@ -1,20 +1,18 @@
+const { z } = require('zod');
+
+const registerSchema = z.object({
+    fullName: z.string().min(1, "Le nom complet est obligatoire."),
+    email: z.string().email("Adresse email invalide."),
+    password: z.string().min(6, "Le mot de passe doit contenir au moins 6 caractères."),
+});
+
 const validateRegister = (req, res, next) => {
-    const { fullName, email, password } = req.body;
+    const result = registerSchema.safeParse(req.body);
 
-    if (!fullName || !email || !password) {
-        return res.status(400).json({ error: "Tous les champs sont requis."});
+    if (!result.success) {
+        return res.status(400).json({ error: result.error.issues[0].message});
     }
-
-    const emailRegex = /\S+@\S+\.\S+/;
-    if (!emailRegex.test(email)) {
-        return res.status(400).json({ error: "Format d'email invalide."});
-    }
-
-    if (password.length < 6) {
-        return res.status(400).json({ error: "Le mot de passe doit faire au moins 6 caractères." });
-    }
-
+    req.body = result.data;
     next();
-};
-
+}
 module.exports = { validateRegister };
