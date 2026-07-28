@@ -15,4 +15,4 @@ const validateRegister = (req, res, next) => {
     req.body = result.data;
     next();
 }
-module.exports = { validateRegister };
+module.exports = validateRegister;
