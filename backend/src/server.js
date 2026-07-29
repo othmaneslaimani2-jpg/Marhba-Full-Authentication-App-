@@ -1,22 +1,24 @@
 const express = require('express');
 const path = require('path');
 const { apiReference } = require('@scalar/express-api-reference');
-const sequelize = require('sequelize');
+const sequelize = require('./config/database');
 
 
+const cors = require('cors');
 const logger = require('./middlewares/logger');
 const errorHandler = require('./middlewares/errorHandler');
 const authRoutes = require('./routes/auth.routes');
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(logger);
 
 app.use('/docs', apiReference({
     theme: 'purple',
     spec: {
-        content: () => require(path.join(__dirname, 'docs', 'OpenApi.json')),
+        content: require(path.join(__dirname, 'docs', 'OpenApi.json')),
     },
 })
 );

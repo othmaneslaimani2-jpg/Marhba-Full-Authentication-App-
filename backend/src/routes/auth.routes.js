@@ -6,7 +6,7 @@ const validateRegister = require('../middlewares/validateRegister');
 const validateLogin = require('../middlewares/validateLogin');
 const authenticate = require('../middlewares/authenticate');
 
-router.post('register', validateRegister, register);
+router.post('/register', validateRegister, register);
 router.post('/login', validateLogin, login);
 router.get('/me', authenticate, getMe);
 
