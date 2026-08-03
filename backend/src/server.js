@@ -30,7 +30,7 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
-sequelize.sync().then(() => {
+sequelize.sync({ alter: true }).then(() => {
     console.log("Base de données connectée !")
     app.listen(PORT, () => {
         console.log(`🚀 Le serveur tourne sur http://localhost:${PORT}`);

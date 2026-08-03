@@ -20,6 +20,10 @@ const User = sequelize.define('User', {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    refreshToken: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+    },
 });
 
 module.exports = User;
